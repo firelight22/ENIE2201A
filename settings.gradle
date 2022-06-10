@@ -16,3 +16,6 @@ rootProject.name = "AndroKado"
 include ':app'
 include ':fragmentapp'
 include ':recyclerview'
+include ':actionbar'
+include ':navdrawer'
+include ':intentavecretour'
