@@ -1,5 +1,9 @@
 package com.quentinrouet.intentavecretour;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,24 +14,28 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
+    ActivityResultLauncher<Intent> arl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button buttonDemanderCalcul =findViewById(R.id.buttonDemanderCalcul);
-
+        arl = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if(result.getResultCode()== RESULT_OK){
+                    Toast.makeText(
+                        this,
+                        String.valueOf(result.getData().getIntExtra("resultatCalcul",0)),
+                        Toast.LENGTH_SHORT).show();
+                }
+            }
+        );
         buttonDemanderCalcul.setOnClickListener(vue -> {
             Intent intentToCalcul = new Intent(this,CalculActivity.class);
-            startActivityForResult(intentToCalcul, 1234);
+
+            arl.launch(intentToCalcul);
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1234 && resultCode == RESULT_OK){
-            Toast.makeText(this, String.valueOf(data.getIntExtra("resultatCalcul",0)), Toast.LENGTH_SHORT).show();
-        }
-    }
 }
