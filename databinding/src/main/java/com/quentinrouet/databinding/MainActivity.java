@@ -14,8 +14,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         amb = DataBindingUtil.setContentView(this,R.layout.activity_main);
-        JeuxVideo lou2 = new JeuxVideo("The Last Of Us 2","Naughty Dog",
-                "survival horror","PS4",40.0f);
+        JeuxVideo lou2 = new JeuxVideo("The Last Of Us 2","Naughty Dog", "survival horror","PS4",40.0f);
         amb.setJv(lou2);
     }
 }
